@@ -78,7 +78,7 @@
       <artifactId>plugin</artifactId>
       <version>1.5</version>
       <scope>system</scope>
-      <systemPath>${plugin.jar.path}</systemPath>
+      <systemPath>C:/Program Files/Java/jdk1.8.0_131/jre/lib/rt.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -144,7 +144,7 @@
         </configuration>
       </plugin>
 
-      <plugin>
+      <!-- <plugin>
         <groupId>com.github.wvengen</groupId>
         <artifactId>proguard-maven-plugin</artifactId>
         <version>2.0.14</version>
@@ -209,7 +209,7 @@
           </libs>
           <addMavenDescriptor>false</addMavenDescriptor>
         </configuration>
-      </plugin>
+      </plugin> -->
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -243,6 +243,20 @@
           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
           <stagingProfileId>aa555c46fc37d0</stagingProfileId>
         </configuration>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.1.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
@@ -321,61 +335,21 @@
     <profile>
       <id>non-mac-jre</id>
       <activation>
-        <file><exists>${java.home}/../lib/rt.jar</exists></file>
+        <file><exists>C:/Program Files/Java/jdk1.8.0_131/jre/lib/rt.jar</exists></file>
       </activation>
       <properties>
-        <rt.jar.path>${java.home}/../lib/rt.jar</rt.jar.path>
+        <rt.jar.path>C:/Program Files/Java/jdk1.8.0_131/jre/lib/rt.jar</rt.jar.path>
       </properties>
-    </profile>
-    <profile>
-      <id>non-mac-jdk</id>
-      <activation>
-        <file><exists>${java.home}/lib/rt.jar</exists></file>
-      </activation>
-      <properties>
-        <rt.jar.path>${java.home}/lib/rt.jar</rt.jar.path>
-      </properties>
-    </profile>
-    <profile>
-      <id>java-9-jdk</id>
-      <activation>
-        <file><exists>${java.home}/jmods/java.base.jmod</exists></file>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>com.github.wvengen</groupId>
-            <artifactId>proguard-maven-plugin</artifactId>
-            <configuration>
-              <libs>
-                <lib>${java.home}/jmods/java.base.jmod</lib>
-                <lib>${java.home}/jmods/java.desktop.jmod</lib>
-                <lib>${java.home}/jmods/java.logging.jmod</lib>
-                <lib>${java.home}/jmods/jdk.jsobject.jmod</lib>
-              </libs>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
     </profile>
 
     <!-- finagling to deal with plugin.jar not being bundled with OpenJDK -->
     <profile>
       <id>standard-jdk</id>
       <activation>
-        <file><exists>${java.home}/lib/plugin.jar</exists></file>
+        <file><exists>C:/Program Files/Java/jdk1.8.0_131/jre/lib/plugin.jar</exists></file>
       </activation>
       <properties>
-        <plugin.jar.path>${java.home}/lib/plugin.jar</plugin.jar.path>
-      </properties>
-    </profile>
-    <profile>
-      <id>icedtea-web</id>
-      <activation>
-        <file><exists>/usr/share/icedtea-web/plugin.jar</exists></file>
-      </activation>
-      <properties>
-        <plugin.jar.path>/usr/share/icedtea-web/plugin.jar</plugin.jar.path>
+        <plugin.jar.path>C:/Program Files/Java/jdk1.8.0_131/jre/lib/plugin.jar</plugin.jar.path>
       </properties>
     </profile>
 
